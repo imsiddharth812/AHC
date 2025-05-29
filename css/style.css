@@ -424,4 +424,66 @@ section[id] {
     justify-content: center;
     min-width: 44px;
     min-height: 44px;
+}
+
+.service-readmore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+.readmore-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--primary-color);
+    background: #fff;
+    color: #1a2a3a;
+    border-radius: 50px;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    transition: width 0.3s cubic-bezier(.4,1.5,.5,1), background 0.2s, border-color 0.2s;
+    overflow: hidden;
+    position: relative;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: none;
+    cursor: pointer;
+    outline: none;
+    gap: 0;
+}
+.readmore-btn i {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1px;
+}
+.readmore-btn .readmore-text {
+    opacity: 0;
+    width: 0;
+    margin-left: 0;
+    white-space: nowrap;
+    color: #1a2a3a;
+    font-weight: 700;
+    font-size: 1.08rem;
+    transition: opacity 0.2s, width 0.3s, margin-left 0.3s;
+    pointer-events: none;
+}
+.readmore-btn:hover, .readmore-btn:focus {
+    width: 160px;
+    background: #fff;
+    border-color: var(--primary-color);
+}
+.readmore-btn:hover i, .readmore-btn:focus i {
+    color: var(--primary-color);
+}
+.readmore-btn:hover .readmore-text, .readmore-btn:focus .readmore-text {
+    opacity: 1;
+    width: auto;
+    margin-left: 0.7rem;
+    pointer-events: auto;
 } 
