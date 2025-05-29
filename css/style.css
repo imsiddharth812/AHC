@@ -291,9 +291,19 @@ section[id] {
     display: block;
     margin-top: 0 !important;
 }
+.about-modern .about-tick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5em;
+}
 .about-modern .about-tick i {
+    font-size: 1.25em;
     color: var(--primary-color);
-    font-size: 1.2rem;
+    vertical-align: middle;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1;
 }
 .about-modern .btn-success {
     background-color: var(--primary-color);
@@ -343,4 +353,75 @@ section[id] {
     .about-modern .about-img-offset {
         margin-top: 76px !important;
     }
+}
+
+.bg-light-green {
+    background: #f4faf6;
+}
+.services-modern .service-card {
+    border: none;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 2px 16px rgba(44, 62, 80, 0.06);
+    border-radius: 24px;
+}
+.services-modern .service-card:hover {
+    box-shadow: 0 6px 32px rgba(44, 62, 80, 0.12);
+}
+.services-modern .service-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: none;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    box-shadow: none;
+    border: none;
+    margin-bottom: 1rem;
+}
+.services-modern .service-icon i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    line-height: 1;
+}
+.services-modern .service-card h5 {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+.services-modern .service-card p {
+    font-size: 1rem;
+}
+.services-modern .btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 0.75rem 2.5rem;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+}
+.services-modern .btn-success:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #fff;
+}
+@media (max-width: 991.98px) {
+    .services-modern .service-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.info-bar-icon {
+    font-size: 2.2rem;
+    color: var(--secondary-color);
+    background: none;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
 } 
