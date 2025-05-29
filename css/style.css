@@ -50,8 +50,8 @@ body {
 .hero-section {
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
                 url('../images/hero-bg.jpg') center/cover;
-    padding-top: 120px;
-    min-height: 100vh;
+    /* padding-top: 50px; */
+    min-height: 60vh;
     display: flex;
     align-items: center;
     position: relative;
@@ -232,6 +232,10 @@ footer {
         max-width: 44px;
         margin-top: 0;
         margin-bottom: 0;
+    }
+    .hero-section {
+        min-height: 45vh;
+        padding-top: 80px;
     }
 }
 
