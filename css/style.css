@@ -526,19 +526,25 @@ section[id] {
     background: #fff;
     object-fit: contain;
     margin-right: 0.75rem;
+    margin-bottom: 1rem !important;
 }
 .footer-modern .h4, .footer-modern h4, .footer-modern h5, .footer-modern h6 {
     color: #fff !important;
     font-weight: 700;
     letter-spacing: 0.01em;
+    margin-bottom: 2rem !important;
+    font-size: 1.5rem !important;
 }
 .footer-modern .text-footer-desc {
     color: #bfc5d2;
     font-size: 1rem;
     line-height: 2;
 }
+.footer-modern .footer-links {
+    margin-top: 3.2rem !important;
+}
 .footer-modern .footer-links li {
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.7rem !important;
 }
 .footer-modern .footer-links a {
     color: #e3eaf2;
@@ -620,6 +626,10 @@ section[id] {
     .footer-modern .footer-policy-links a {
         margin-right: 1rem;
     }
+}
+
+.footer-modern .footer-contact {
+    margin-top: 3rem !important;
 }
 .footer-modern .footer-contact li {
     margin-bottom: 1.5rem !important;
