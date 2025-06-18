@@ -18,7 +18,7 @@
 <body>
     <!-- Header -->
     <header class="fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white floating-navbar">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="#">
                     <img src="images/logo.png" alt="Abhivyakt Homoeopathy Logo" class="logo-img me-2" height="44">
@@ -33,7 +33,7 @@
                             <a class="nav-link active" href="#home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
+                            <a class="nav-link" href="about.html">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#services">Services</a>
@@ -165,7 +165,7 @@
                             <i class="bi bi-heart-pulse"></i>
                         </div>
                         <h5 class="fw-bold mb-2 text-dark">Chronic Disease Care</h5>
-                        <p class="text-secondary mb-0">Personalized treatment for chronic issues like asthma, arthritis, skin disorders, and more.</p>
+                        <p class="text-secondary mb-0">Personalized treatment for chronic issues like asthma, arthritis, skin disorders, <br> and more.</p>
                         <div class="service-readmore mt-4 mx-auto">
                             <button class="readmore-btn">
                                 <i class="bi bi-plus-lg"></i>
@@ -232,7 +232,7 @@
                     <ul class="list-unstyled footer-links">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#services">Our Services</a></li>
-                        <li><a href="#about">About Us</a></li>
+                        <li><a href="about.html">About Us</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -267,5 +267,44 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Floating Navbar Scroll Logic
+    (function() {
+        const navbar = document.querySelector('.floating-navbar');
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        let isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
+        if (isHome) document.body.classList.add('homepage');
+
+        function onScroll() {
+            if (window.scrollY <= 0) {
+                navbar.classList.remove('hide');
+                navbar.classList.add('at-top');
+                return;
+            } else {
+                navbar.classList.remove('at-top');
+            }
+            if (window.scrollY < lastScrollY) {
+                navbar.classList.remove('hide');
+            } else {
+                navbar.classList.add('hide');
+            }
+            lastScrollY = window.scrollY;
+        }
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    onScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        // Initial state
+        if (window.scrollY <= 0) {
+            navbar.classList.add('at-top');
+        }
+    })();
+    </script>
 </body>
 </html> 
