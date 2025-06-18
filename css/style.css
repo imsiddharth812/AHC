@@ -790,6 +790,19 @@ section[id] {
     }
 }
 
+@media (max-width: 575.98px) {
+    .about-title {
+        font-size: 1.4rem;
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+    }
+    .about-header-section {
+        padding-top: 6.5rem !important;
+        padding-bottom: 1.5rem !important;
+        min-height: 12vh;
+    }
+}
+
 /* Floating Navbar Styles */
 .floating-navbar {
     position: fixed;
@@ -831,13 +844,44 @@ section[id] {
     pointer-events: none;
 }
 @media (max-width: 991.98px) {
-    .floating-navbar {
+    .floating-navbar,
+    .homepage .floating-navbar,
+    .floating-navbar.at-top,
+    .homepage .floating-navbar.at-top {
+        background: #fff !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
         left: 0;
         transform: none;
         width: 100%;
-        border-radius: 0;
         max-width: 100%;
         top: 0;
+    }
+    .floating-navbar .navbar-brand h1,
+    .homepage .floating-navbar .navbar-brand h1,
+    .floating-navbar.at-top .navbar-brand h1,
+    .homepage .floating-navbar.at-top .navbar-brand h1 {
+        color: var(--primary-color) !important;
+    }
+    .floating-navbar .nav-link,
+    .homepage .floating-navbar .nav-link,
+    .floating-navbar.at-top .nav-link,
+    .homepage .floating-navbar.at-top .nav-link {
+        color: #222 !important;
+    }
+    .floating-navbar .nav-link.active,
+    .homepage .floating-navbar .nav-link.active,
+    .floating-navbar.at-top .nav-link.active,
+    .homepage .floating-navbar.at-top .nav-link.active {
+        color: var(--primary-color) !important;
+    }
+    .floating-navbar .btn-success,
+    .homepage .floating-navbar .btn-success,
+    .floating-navbar.at-top .btn-success,
+    .homepage .floating-navbar.at-top .btn-success {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+        color: #fff !important;
     }
 }
 body.homepage .floating-navbar {
