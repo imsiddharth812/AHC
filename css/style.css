@@ -5,17 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-/* ================================================== */
-/* import icons */
-/* ================================================== */
 
-@import url("../fonts/fontawesome4/css/font-awesome.css");
-@import url("../fonts/fontawesome6/css/fontawesome.css");
-@import url("../fonts/fontawesome6/css/brands.css");
-@import url("../fonts/fontawesome6/css/solid.css");
-@import url("../fonts/elegant_font/HTML_CSS/style.css");
-@import url("../fonts/et-line-font/style.css");
-@import url("../fonts/icofont/icofont.min.css");
 
 :root {
     --primary-color: #2E7D32;
@@ -329,15 +319,15 @@ section[id] {
     display: block;
     margin-top: 0 !important;
 }
-.about-modern .about-tick {
+.about-tick {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 1.5em;
 }
-.about-modern .about-tick i {
+.about-tick i {
     font-size: 1.25em;
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
     vertical-align: middle;
     margin-top: 0;
     margin-bottom: 0;
