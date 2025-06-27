@@ -211,100 +211,14 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer-modern bg-dark text-light pt-5 pb-3">
-        <div class="container">
-            <div class="row gy-5 align-items-start">
-                <div class="col-lg-4">
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="images/logo.png" alt="Abhivyakt Homoeopathy Logo" class="logo-img me-2" height="44">
-                        <span class="h4 mb-0 fw-bold text-light">Abhivyakt Homoeo Clinic</span>
-                    </div>
-                    <p class="mb-4 text-footer-desc">At Abhivyakt, we're dedicated to providing high-quality, personalized homoeopathic care for all ages. Our skilled team uses the latest methods to ensure gentle, effective, and holistic healing for life.</p>
-                    <div class="footer-social d-flex gap-3 mb-4">
-                        <a href="#" class="footer-social-link" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="footer-social-link" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-                        <a href="#" class="footer-social-link" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-2">
-                    <h6 class="fw-bold text-light mb-3">Company</h6>
-                    <ul class="list-unstyled footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Our Services</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-lg-3">
-                    <h6 class="fw-bold text-light mb-3">Our Services</h6>
-                    <ul class="list-unstyled footer-links">
-                        <li><a href="#services">Acute Illness Management</a></li>
-                        <li><a href="#services">Chronic Disease Care</a></li>
-                        <li><a href="#services">Pediatric Homoeopathy</a></li>
-                        <li><a href="#services">Women's Wellness</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3">
-                    <h6 class="fw-bold text-light mb-3">Contact Us</h6>
-                    <ul class="list-unstyled footer-contact">
-                        <li class="mb-2 d-flex align-items-start"><i class="bi bi-geo-alt me-2 text-success"></i> <span><strong>Clinic Location</strong><br>157, 1st Floor, Suyash Solitaire, Nr. Poddar International School, Kudasan, Gandhinagar - 382421</span></li>
-                        <li class="mb-2 d-flex align-items-start"><i class="bi bi-telephone me-2 text-success"></i> <span><strong>Call Us</strong><br>+91 9429327672</span></li>
-                        <li class="mb-2 d-flex align-items-start"><i class="bi bi-envelope me-2 text-success"></i> <span><strong>Send a Message</strong><br>info@abhivyakthomoeopathy.com</span></li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="footer-divider my-4" />
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <div class="text-footer-desc small mb-2 mb-md-0">&copy; 2025 Abhivyakt Homoeo Clinic. All rights reserved.</div>
-                <div class="footer-policy-links small">
-                    <a href="#" class="me-3">Terms &amp; Conditions</a>
-                    <a href="#">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="footer-placeholder"></div>
+    <script src="navbar.js"></script>
     <script>
-    // Floating Navbar Scroll Logic
-    (function() {
-        const navbar = document.querySelector('.floating-navbar');
-        let lastScrollY = window.scrollY;
-        let ticking = false;
-        let isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
-        if (isHome) document.body.classList.add('homepage');
-
-        function onScroll() {
-            if (window.scrollY <= 0) {
-                navbar.classList.remove('hide');
-                navbar.classList.add('at-top');
-                return;
-            } else {
-                navbar.classList.remove('at-top');
-            }
-            if (window.scrollY < lastScrollY) {
-                navbar.classList.remove('hide');
-            } else {
-                navbar.classList.add('hide');
-            }
-            lastScrollY = window.scrollY;
-        }
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    onScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer-placeholder').innerHTML = data;
         });
-        // Initial state
-        if (window.scrollY <= 0) {
-            navbar.classList.add('at-top');
-        }
-    })();
     </script>
 </body>
 </html> 
