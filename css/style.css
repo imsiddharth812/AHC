@@ -71,6 +71,7 @@ body {
     align-items: center;
     position: relative;
     z-index: 1;
+    padding: 0 !important;
 }
 
 .hero-section h1 {
@@ -286,6 +287,14 @@ footer .logo-img {
 section[id] {
     scroll-margin-top: 90px;
 }
+
+/* .hero-section {
+    padding: 0 !important;
+} */
+
+section {
+    padding: 120px 0 120px 0;
+  }
 
 .about-modern {
     /* margin-top: 4rem;
@@ -526,6 +535,14 @@ section[id] {
     width: auto;
     margin-left: 0.7rem;
     pointer-events: auto;
+}
+.readmore-text a {
+  color: #1a2a3a !important;
+  text-decoration: none !important;
+}
+.readmore-text a:hover, .readmore-text a:focus {
+  color: var(--primary-color) !important;
+  text-decoration: underline;
 }
 
 .footer-modern {
@@ -885,4 +902,192 @@ body.homepage .floating-navbar {
     border-color: #277032 !important;
     color: #fff !important;
     box-shadow: none !important;
+}
+
+
+
+/* Global Why Choose Us Section Styles */
+.global-why-choose-section {
+    /* background: #90EE90; */
+    min-height: 60vh;
+    color: #fff;
+}
+.why-choose-label {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+.why-choose-title {
+    font-size: 3rem;
+    color: #fff;
+    line-height: 1.1;
+}
+.why-choose-list {
+    font-size: 1rem;
+
+}
+.why-choose-icon {
+    color: var(--primary-color) !important;
+}
+@media (max-width: 991.98px) {
+    .why-choose-title {
+        font-size: 2rem;
+    }
+}
+
+/* Service Intro Section Styles */
+.service-intro-section {}
+.service-intro-img {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+    background: #fff;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.service-intro-img-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.service-intro-quote-overlap {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: #4a7be7;
+    color: #fff;
+    border-radius: 1rem;
+    padding: 1.1rem 2rem 1.1rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
+    max-width: 320px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+@media (max-width: 991.98px) {
+    .service-intro-img {
+        max-width: 100%;
+        aspect-ratio: 16/10;
+    }
+    .service-intro-quote-overlap {
+        top: 10px;
+        right: 10px;
+        padding: 0.7rem 1.2rem 0.7rem 1rem;
+        font-size: 1rem;
+        max-width: 90%;
+    }
+}
+.service-intro-label {
+    /* Inherit text-success, fw-semibold, add more if needed */
+}
+.service-intro-title {
+    /* Inherit display-6, fw-bold, text-dark, add more if needed */
+}
+.service-intro-desc {
+    /* Inherit lead, text-secondary, add more if needed */
+}
+.service-intro-quote {
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    max-width: 350px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Book Appointment CTA Styles */
+.book-appointment-cta {
+    background: #14226a;
+    /* Inherit py-5, bg-primary, text-white, text-center, add more if needed */
+}
+.book-appointment-title {
+    /* Inherit fw-bold, mb-3, add more if needed */
+}
+.book-appointment-desc {
+    /* Inherit mb-4, add more if needed */
+}
+.book-appointment-btn {
+    /* Inherit btn, btn-light, btn-lg, fw-semibold, px-4, add more if needed */
+}
+
+/* FAQ Section Styles */
+/* .faq-section {
+    background: #f8fafc;
+    padding: 0;
+} */
+.faq-container {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 4px 32px rgba(44, 62, 80, 0.07);
+    padding: 4rem 3rem;
+    margin: 3rem auto 2rem auto;
+    max-width: 1200px;
+}
+.faq-label {
+    color: #4a7be7;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.faq-title {
+    color: #1a2340;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.faq-accordion .accordion-item {
+    border: none;
+    border-bottom: 1px solid #e5e7eb;
+    background: transparent;
+}
+.faq-accordion .accordion-button {
+    background: transparent;
+    color: #1a2340;
+    font-size: 1.1rem;
+    font-weight: 500;
+    box-shadow: none;
+    border: none;
+    padding: 1.1rem 1.2rem;
+}
+.faq-accordion .accordion-button:not(.collapsed) {
+    color: #277032;
+    background: #f4faf6;
+}
+.faq-accordion .accordion-body {
+    color: #4a5568;
+    font-size: 1rem;
+    padding: 1.1rem 1.2rem 1.2rem 1.2rem;
+    background: transparent;
+}
+.accordion .accordion-button,
+.accordion .accordion-button:not(.collapsed),
+.accordion .accordion-button:focus,
+.accordion .accordion-button:active {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+@media (max-width: 991.98px) {
+    .faq-container {
+        padding: 2rem 1rem;
+        border-radius: 1.2rem;
+    }
+    .faq-title {
+        font-size: 2rem;
+    }
+    /* .accordion-body {
+        font-size: 0.9rem;
+        color: #0561ff !important;
+    } */
+    .accordion-button {
+        font-size: 0.9rem;
+    }
 } 
