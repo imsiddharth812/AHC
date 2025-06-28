@@ -909,13 +909,10 @@ body.homepage .floating-navbar {
 /* Global Why Choose Us Section Styles */
 .global-why-choose-section {
     /* background: #90EE90; */
-    min-height: 60vh;
+    min-height: 45vh;
     color: #fff;
 }
-.why-choose-label {
-    color: var(--primary-color);
-    font-size: 1.2rem;
-}
+
 .why-choose-title {
     font-size: 3rem;
     color: #fff;
