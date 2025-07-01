@@ -932,7 +932,7 @@ body.homepage .floating-navbar {
 }
 
 /* Service Intro Section Styles */
-.service-intro-section {}
+
 .service-intro-img {
     width: 100%;
     max-width: 600px;
@@ -982,15 +982,7 @@ body.homepage .floating-navbar {
         max-width: 90%;
     }
 }
-.service-intro-label {
-    /* Inherit text-success, fw-semibold, add more if needed */
-}
-.service-intro-title {
-    /* Inherit display-6, fw-bold, text-dark, add more if needed */
-}
-.service-intro-desc {
-    /* Inherit lead, text-secondary, add more if needed */
-}
+
 .service-intro-quote {
     background: var(--primary-color);
     color: #fff;
@@ -1002,26 +994,9 @@ body.homepage .floating-navbar {
     font-weight: 500;
 }
 
-/* Book Appointment CTA Styles */
-.book-appointment-cta {
-    background: #14226a;
-    /* Inherit py-5, bg-primary, text-white, text-center, add more if needed */
-}
-.book-appointment-title {
-    /* Inherit fw-bold, mb-3, add more if needed */
-}
-.book-appointment-desc {
-    /* Inherit mb-4, add more if needed */
-}
-.book-appointment-btn {
-    /* Inherit btn, btn-light, btn-lg, fw-semibold, px-4, add more if needed */
-}
 
-/* FAQ Section Styles */
-/* .faq-section {
-    background: #f8fafc;
-    padding: 0;
-} */
+
+
 .faq-container {
     background: #fff;
     border-radius: 2rem;
@@ -1087,4 +1062,15 @@ body.homepage .floating-navbar {
     .accordion-button {
         font-size: 0.9rem;
     }
+} 
+
+@media (max-width: 991.98px) {
+  section {
+    padding: 40px 0 40px 0;
+  }
+}
+@media (max-width: 575.98px) {
+  section {
+    padding: 20px 0 20px 0;
+  }
 } 
