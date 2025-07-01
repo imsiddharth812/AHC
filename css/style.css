@@ -1139,3 +1139,46 @@ body.homepage .floating-navbar {
     }
 } 
 }
+
+/* Smooth dropdown animation */
+@media (min-width: 992px) {
+  .navbar .dropdown-menu {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s cubic-bezier(.4,1.5,.5,1), transform 0.25s cubic-bezier(.4,1.5,.5,1);
+    display: block;
+    pointer-events: none;
+    min-width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(44,62,80,0.10);
+    margin-top: 0.5rem;
+    background: #fff;
+    border: none;
+  }
+  .navbar .dropdown:hover .dropdown-menu,
+  .navbar .dropdown:focus-within .dropdown-menu,
+  .navbar .dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+@media (max-width: 991.98px) {
+  .navbar .dropdown-menu {
+    position: static;
+    float: none;
+    box-shadow: none;
+    min-width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+    background: #fff;
+    display: none;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    border: none;
+  }
+  .navbar .dropdown-menu.show {
+    display: block;
+  }
+}
