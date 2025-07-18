@@ -61,7 +61,7 @@
                             <a class="nav-link active" href="contact.html">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-success ms-lg-3" href="index.html#appointment">Book Appointment</a>
+                            <a class="btn btn-success ms-lg-3" href="contact.html?appointment=true">Book Appointment</a>
                         </li>
                     </ul>
                 </div>
@@ -215,8 +215,8 @@
                                         <label for="subject" class="form-label fw-semibold">Subject *</label>
                                         <select class="form-select" id="subject" name="subject" required>
                                             <option value="">Select a subject</option>
+                                            <option value="Appointment Request">📅 Book Appointment</option>
                                             <option value="General Inquiry">General Inquiry</option>
-                                            <option value="Appointment Request">Appointment Request</option>
                                             <option value="Treatment Information">Treatment Information</option>
                                             <option value="Follow-up">Follow-up</option>
                                             <option value="Other">Other</option>
@@ -307,6 +307,87 @@
         let generatedEmailOTP = '';
         let isEmailVerified = false;
         let emailOtpSent = false;
+
+        // Check if user came for appointment booking
+        const urlParams = new URLSearchParams(window.location.search);
+        const isAppointment = urlParams.get('appointment') === 'true';
+        
+        if (isAppointment) {
+            // Pre-select appointment request in subject dropdown
+            document.addEventListener('DOMContentLoaded', function() {
+                const subjectSelect = document.getElementById('subject');
+                const messageTextarea = document.getElementById('message');
+                const formTitle = document.querySelector('.bg-light-green h2');
+                const formDescription = document.querySelector('.bg-light-green .text-secondary');
+                const formLabel = document.querySelector('.bg-light-green .fw-semibold');
+                
+                // Update form title and description for appointments
+                if (formLabel) {
+                    formLabel.textContent = '📅 Book Your Appointment';
+                }
+                if (formTitle) {
+                    formTitle.innerHTML = '🩺 Schedule Your Consultation';
+                }
+                if (formDescription) {
+                    formDescription.innerHTML = 'Fill out the form below to book your appointment. We\'ll contact you within <strong>24 hours</strong> to confirm your preferred date and time.';
+                }
+                
+                if (subjectSelect) {
+                    subjectSelect.value = 'Appointment Request';
+                }
+                
+                if (messageTextarea && messageTextarea.value === '') {
+                    messageTextarea.placeholder = 'Please provide the following details:\n• Preferred date and time\n• Type of consultation needed\n• Your main health concerns\n• Any previous medical history\n• Any specific requirements';
+                    messageTextarea.value = '📅 APPOINTMENT REQUEST\n\n🗓️ Preferred Date: \n⏰ Preferred Time: \n🩺 Consultation Type: \n💬 Health Concerns: \n📋 Medical History: \n📝 Additional Notes: ';
+                }
+                
+                // Add appointment-specific styling
+                const formSection = document.querySelector('.bg-light-green');
+                const formCard = document.querySelector('.bg-light-green .card');
+                
+                // Scroll to form section with a highlight effect
+                setTimeout(() => {
+                    formSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Add appointment booking highlight
+                    if (formCard) {
+                        formCard.style.border = '3px solid #198754';
+                        formCard.style.boxShadow = '0 0 25px rgba(25, 135, 84, 0.4)';
+                        
+                        // Add a subtle pulse animation
+                        formCard.style.animation = 'appointmentPulse 2s ease-in-out';
+                        
+                        setTimeout(() => {
+                            formCard.style.border = '';
+                            formCard.style.boxShadow = '';
+                            formCard.style.animation = '';
+                        }, 4000);
+                    }
+                }, 500);
+                
+                // Show appointment booking success message
+                const messagesDiv = document.getElementById('formMessages');
+                messagesDiv.innerHTML = '<div class="alert alert-info"><i class="bi bi-calendar-check me-2"></i><strong>Appointment Booking Mode:</strong> This form is optimized for scheduling your consultation. We\'ll prioritize your request!</div>';
+                
+                setTimeout(() => {
+                    messagesDiv.innerHTML = '';
+                }, 5000);
+            });
+        }
+        
+        // Add CSS for appointment pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes appointmentPulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Email validation and OTP trigger
         document.getElementById('email').addEventListener('input', function () {
@@ -447,11 +528,60 @@
                     if (response.ok) {
                         messagesDiv.innerHTML = '<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Thank you! Your message has been sent successfully. We\'ll get back to you soon.</div>';
                         this.reset();
+                        
                         // Reset verification status
                         isEmailVerified = false;
                         emailOtpSent = false;
                         document.getElementById('emailOtpSection').style.display = 'none';
                         document.getElementById('sendEmailOtpSection').style.display = 'none';
+                        
+                        // Reset appointment-specific styling and content
+                        const formTitle = document.querySelector('.bg-light-green h2');
+                        const formDescription = document.querySelector('.bg-light-green .text-secondary');
+                        const formLabel = document.querySelector('.bg-light-green .fw-semibold');
+                        const messageTextarea = document.getElementById('message');
+                        const subjectSelect = document.getElementById('subject');
+                        const formCard = document.querySelector('.bg-light-green .card');
+                        
+                        // Reset form title and description to normal
+                        if (formLabel) {
+                            formLabel.textContent = 'Send Us a Message';
+                        }
+                        if (formTitle) {
+                            formTitle.innerHTML = 'Get in Touch';
+                        }
+                        if (formDescription) {
+                            formDescription.innerHTML = 'Fill out the form below and we\'ll get back to you as soon as possible.';
+                        }
+                        
+                        // Reset message placeholder and value
+                        if (messageTextarea) {
+                            messageTextarea.placeholder = 'Please describe your inquiry or symptoms...';
+                            messageTextarea.value = '';
+                        }
+                        
+                        // Reset subject dropdown
+                        if (subjectSelect) {
+                            subjectSelect.value = '';
+                        }
+                        
+                        // Remove appointment-specific styling
+                        if (formCard) {
+                            formCard.style.border = '';
+                            formCard.style.boxShadow = '';
+                            formCard.style.animation = '';
+                        }
+                        
+                        // Remove appointment parameter from URL
+                        const url = new URL(window.location);
+                        url.searchParams.delete('appointment');
+                        window.history.replaceState({}, document.title, url);
+                        
+                        // Auto-hide success message after 5 seconds
+                        setTimeout(() => {
+                            messagesDiv.innerHTML = '';
+                        }, 5000);
+                        
                     } else {
                         throw new Error('Form submission failed');
                     }
