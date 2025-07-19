@@ -326,10 +326,11 @@ footer {
     border-radius: 16px;
     background: transparent;
     box-shadow: 0 4px 16px rgba(44, 62, 80, 0.08);
-    margin-top: -16px;
-    margin-bottom: -16px;
+    margin-top: -8px;
+    margin-bottom: -8px;
     z-index: 2;
     position: relative;
+    vertical-align: middle;
 }
 
 footer .logo-img {
@@ -621,9 +622,10 @@ section {
     background: #fff;
     object-fit: contain;
     margin-right: 0.75rem;
-    margin-bottom: 1rem !important;
-    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-top: -6px !important;
     vertical-align: top;
+    align-self: flex-start;
 }
 .footer-modern .h4, .footer-modern h4, .footer-modern h5, .footer-modern h6 {
     color: #fff !important;
