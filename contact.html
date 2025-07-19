@@ -198,7 +198,8 @@
                                         <button type="button" class="btn btn-success" id="sendEmailOtpBtn">
                                             <i class="bi bi-envelope me-2"></i>Send Email OTP
                                         </button>
-                                        <small class="text-muted ms-3" id="otpHelpText">We'll send a verification code to your email
+                                        <small class="text-muted ms-3" id="otpHelpText">We'll send a verification code
+                                            to your email
                                             address</small>
                                     </div>
                                     <div class="col-md-6" id="emailOtpSection" style="display: none;">
@@ -211,16 +212,20 @@
                                         </div>
                                         <small class="text-muted">OTP sent to your email address</small>
                                     </div>
-                                    
+
                                     <!-- OTP Messages Area -->
                                     <div class="col-12" id="otpMessages" style="display: none;"></div>
-                                    <div class="col-md-6">
-                                        <label for="preferredDate" class="form-label fw-semibold">Preferred Date *</label>
-                                        <input type="date" class="form-control" id="preferredDate" name="preferredDate" required>
+
+                                    <!-- Appointment-specific fields (only shown for appointment booking) -->
+                                    <div class="col-md-6" id="preferredDateSection" style="display: none;">
+                                        <label for="preferredDate" class="form-label fw-semibold">Preferred Date
+                                            *</label>
+                                        <input type="date" class="form-control" id="preferredDate" name="preferredDate">
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="consultationType" class="form-label fw-semibold">Consultation Type *</label>
-                                        <select class="form-select" id="consultationType" name="consultationType" required>
+                                    <div class="col-md-6" id="consultationTypeSection" style="display: none;">
+                                        <label for="consultationType" class="form-label fw-semibold">Consultation Type
+                                            *</label>
+                                        <select class="form-select" id="consultationType" name="consultationType">
                                             <option value="">Select consultation type</option>
                                             <option value="Online">Online</option>
                                             <option value="In Person">In Person</option>
@@ -316,7 +321,7 @@
         });
 
         // Set date picker constraints
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const dateInput = document.getElementById('preferredDate');
             const today = new Date();
             const maxDate = new Date();
@@ -346,27 +351,27 @@
                 alert(message.replace(/<[^>]*>/g, '')); // Fallback to alert
                 return;
             }
-            
+
             const iconMap = {
                 'success': 'bi-check-circle',
                 'danger': 'bi-x-circle',
                 'warning': 'bi-exclamation-triangle',
                 'info': 'bi-info-circle'
             };
-            
+
             const icon = iconMap[type] || 'bi-info-circle';
             messagesDiv.innerHTML = `<div class="alert alert-${type} mb-2"><i class="bi ${icon} me-2"></i>${message}</div>`;
-            
+
             // Show the OTP messages div if it's an OTP message
             if (isOtpMessage) {
                 messagesDiv.style.display = 'block';
             }
-            
+
             // Scroll to message
             setTimeout(() => {
                 messagesDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 100);
-            
+
             console.log(`Message displayed (${type}):`, message);
         }
 
@@ -382,16 +387,36 @@
         // Check if user came for appointment booking
         const urlParams = new URLSearchParams(window.location.search);
         const isAppointment = urlParams.get('appointment') === 'true';
-        
+
         if (isAppointment) {
             // Pre-select appointment request in subject dropdown
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 const subjectSelect = document.getElementById('subject');
                 const messageTextarea = document.getElementById('message');
                 const formTitle = document.querySelector('.bg-light-green h2');
                 const formDescription = document.querySelector('.bg-light-green .text-secondary');
                 const formLabel = document.querySelector('.bg-light-green .fw-semibold');
-                
+                const preferredDateSection = document.getElementById('preferredDateSection');
+                const consultationTypeSection = document.getElementById('consultationTypeSection');
+                const preferredDateInput = document.getElementById('preferredDate');
+                const consultationTypeInput = document.getElementById('consultationType');
+
+                // Show appointment-specific fields
+                if (preferredDateSection) {
+                    preferredDateSection.style.display = 'block';
+                }
+                if (consultationTypeSection) {
+                    consultationTypeSection.style.display = 'block';
+                }
+
+                // Make appointment fields required
+                if (preferredDateInput) {
+                    preferredDateInput.required = true;
+                }
+                if (consultationTypeInput) {
+                    consultationTypeInput.required = true;
+                }
+
                 // Update form title and description for appointments
                 if (formLabel) {
                     formLabel.textContent = '📅 Book Your Appointment';
@@ -402,35 +427,35 @@
                 if (formDescription) {
                     formDescription.innerHTML = 'Fill out the form below to book your appointment. We\'ll contact you within <strong>24 hours</strong> to confirm your preferred date and time.';
                 }
-                
+
                 if (subjectSelect) {
                     subjectSelect.value = 'Appointment Request';
                 }
-                
+
                 if (messageTextarea && messageTextarea.value === '') {
                     messageTextarea.placeholder = 'Please describe your health concerns, symptoms, or any additional information...';
                     messageTextarea.value = '';
                 }
-                
+
                 // Add appointment-specific styling
                 const formSection = document.querySelector('.bg-light-green');
                 const formCard = document.querySelector('.bg-light-green .card');
-                
+
                 // Scroll to form section with a highlight effect
                 setTimeout(() => {
-                    formSection.scrollIntoView({ 
+                    formSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    
+
                     // Add appointment booking highlight
                     if (formCard) {
                         formCard.style.border = '3px solid #198754';
                         formCard.style.boxShadow = '0 0 25px rgba(25, 135, 84, 0.4)';
-                        
+
                         // Add a subtle pulse animation
                         formCard.style.animation = 'appointmentPulse 2s ease-in-out';
-                        
+
                         setTimeout(() => {
                             formCard.style.border = '';
                             formCard.style.boxShadow = '';
@@ -438,17 +463,17 @@
                         }, 4000);
                     }
                 }, 500);
-                
+
                 // Show appointment booking success message
                 const messagesDiv = document.getElementById('formMessages');
                 messagesDiv.innerHTML = '<div class="alert alert-info"><i class="bi bi-calendar-check me-2"></i><strong>Appointment Booking Mode:</strong> This form is optimized for scheduling your consultation. We\'ll prioritize your request!</div>';
-                
+
                 setTimeout(() => {
                     messagesDiv.innerHTML = '';
                 }, 5000);
             });
         }
-        
+
         // Add CSS for appointment pulse animation
         const style = document.createElement('style');
         style.textContent = `
@@ -619,7 +644,7 @@
                     if (response.ok) {
                         messagesDiv.innerHTML = '<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Thank you! Your message has been sent successfully. We\'ll get back to you soon.</div>';
                         this.reset();
-                        
+
                         // Reset verification status
                         isEmailVerified = false;
                         emailOtpSent = false;
@@ -627,36 +652,36 @@
                         document.getElementById('emailOtpSection').style.display = 'none';
                         document.getElementById('sendEmailOtpSection').style.display = 'none';
                         clearOtpMessages();
-                        
+
                         // Reset OTP button and help text
                         const sendOtpBtn = document.getElementById('sendEmailOtpBtn');
                         const verifyOtpBtn = document.getElementById('verifyEmailOtpBtn');
                         const otpHelpText = document.getElementById('otpHelpText');
                         const emailOtpInput = document.getElementById('emailOtp');
-                        
+
                         if (sendOtpBtn) {
                             sendOtpBtn.innerHTML = '<i class="bi bi-envelope me-2"></i>Send Email OTP';
                             sendOtpBtn.classList.remove('btn-outline-success');
                             sendOtpBtn.classList.add('btn-success');
                             sendOtpBtn.disabled = false;
                         }
-                        
+
                         if (verifyOtpBtn) {
                             verifyOtpBtn.innerHTML = 'Verify';
                             verifyOtpBtn.classList.remove('btn-success');
                             verifyOtpBtn.classList.add('btn-outline-success');
                             verifyOtpBtn.disabled = false;
                         }
-                        
+
                         if (otpHelpText) {
                             otpHelpText.style.display = 'inline';
                         }
-                        
+
                         if (emailOtpInput) {
                             emailOtpInput.disabled = false;
                             emailOtpInput.value = '';
                         }
-                        
+
                         // Reset appointment-specific styling and content
                         const formTitle = document.querySelector('.bg-light-green h2');
                         const formDescription = document.querySelector('.bg-light-green .text-secondary');
@@ -664,7 +689,29 @@
                         const messageTextarea = document.getElementById('message');
                         const subjectSelect = document.getElementById('subject');
                         const formCard = document.querySelector('.bg-light-green .card');
-                        
+                        const preferredDateSection = document.getElementById('preferredDateSection');
+                        const consultationTypeSection = document.getElementById('consultationTypeSection');
+                        const preferredDateInput = document.getElementById('preferredDate');
+                        const consultationTypeInput = document.getElementById('consultationType');
+
+                        // Hide appointment-specific fields
+                        if (preferredDateSection) {
+                            preferredDateSection.style.display = 'none';
+                        }
+                        if (consultationTypeSection) {
+                            consultationTypeSection.style.display = 'none';
+                        }
+
+                        // Remove required attributes from appointment fields
+                        if (preferredDateInput) {
+                            preferredDateInput.required = false;
+                            preferredDateInput.value = '';
+                        }
+                        if (consultationTypeInput) {
+                            consultationTypeInput.required = false;
+                            consultationTypeInput.value = '';
+                        }
+
                         // Reset form title and description to normal
                         if (formLabel) {
                             formLabel.textContent = 'Send Us a Message';
@@ -675,35 +722,35 @@
                         if (formDescription) {
                             formDescription.innerHTML = 'Fill out the form below and we\'ll get back to you as soon as possible.';
                         }
-                        
+
                         // Reset message placeholder and value
                         if (messageTextarea) {
                             messageTextarea.placeholder = 'Please describe your inquiry or symptoms...';
                             messageTextarea.value = '';
                         }
-                        
+
                         // Reset subject dropdown
                         if (subjectSelect) {
                             subjectSelect.value = '';
                         }
-                        
+
                         // Remove appointment-specific styling
                         if (formCard) {
                             formCard.style.border = '';
                             formCard.style.boxShadow = '';
                             formCard.style.animation = '';
                         }
-                        
+
                         // Remove appointment parameter from URL
                         const url = new URL(window.location);
                         url.searchParams.delete('appointment');
                         window.history.replaceState({}, document.title, url);
-                        
+
                         // Auto-hide success message after 5 seconds
                         setTimeout(() => {
                             messagesDiv.innerHTML = '';
                         }, 5000);
-                        
+
                     } else {
                         throw new Error('Form submission failed');
                     }
