@@ -30,14 +30,6 @@ html {
     overflow-x: hidden;
 }
 
-/* Only apply full-width to containers on very small screens */
-@media (max-width: 575.98px) {
-    .container {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-}
-
 /* Additional mobile overflow prevention */
 img, video, iframe, embed, object {
     max-width: 100%;
@@ -52,13 +44,13 @@ pre, code {
     max-width: 100%;
 }
 
-/* Ensure all sections stay within viewport - but exclude navigation containers */
+/* Ensure all sections stay within viewport */
 section:not(.navbar-section), main, article, aside {
     max-width: 100%;
     overflow-x: hidden;
 }
 
-/* Only apply overflow hidden to specific divs that might cause horizontal scroll */
+/* Only apply to specific divs that need it */
 div.container-fluid, div.row {
     overflow-x: hidden;
 }
