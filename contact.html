@@ -198,7 +198,7 @@
                                         <button type="button" class="btn btn-success" id="sendEmailOtpBtn">
                                             <i class="bi bi-envelope me-2"></i>Send Email OTP
                                         </button>
-                                        <small class="text-muted ms-3">We'll send a verification code to your email
+                                        <small class="text-muted ms-3" id="otpHelpText">We'll send a verification code to your email
                                             address</small>
                                     </div>
                                     <div class="col-md-6" id="emailOtpSection" style="display: none;">
@@ -211,6 +211,22 @@
                                         </div>
                                         <small class="text-muted">OTP sent to your email address</small>
                                     </div>
+                                    
+                                    <!-- OTP Messages Area -->
+                                    <div class="col-12" id="otpMessages" style="display: none;"></div>
+                                    <div class="col-md-6">
+                                        <label for="preferredDate" class="form-label fw-semibold">Preferred Date *</label>
+                                        <input type="date" class="form-control" id="preferredDate" name="preferredDate" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="consultationType" class="form-label fw-semibold">Consultation Type *</label>
+                                        <select class="form-select" id="consultationType" name="consultationType" required>
+                                            <option value="">Select consultation type</option>
+                                            <option value="Online">Online</option>
+                                            <option value="In Person">In Person</option>
+                                        </select>
+                                    </div>
+
                                     <div class="col-12">
                                         <label for="subject" class="form-label fw-semibold">Subject *</label>
                                         <select class="form-select" id="subject" name="subject" required>
@@ -223,10 +239,9 @@
                                         </select>
                                     </div>
                                     <div class="col-12">
-                                        <label for="message" class="form-label fw-semibold">Message *</label>
+                                        <label for="message" class="form-label fw-semibold">Message</label>
                                         <textarea class="form-control" id="message" name="message" rows="5"
-                                            placeholder="Please describe your inquiry or symptoms..."
-                                            required></textarea>
+                                            placeholder="Please describe your inquiry or symptoms..."></textarea>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
@@ -300,6 +315,21 @@
             once: true
         });
 
+        // Set date picker constraints
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('preferredDate');
+            const today = new Date();
+            const maxDate = new Date();
+            maxDate.setDate(today.getDate() + 30);
+
+            // Format dates to YYYY-MM-DD
+            const todayStr = today.toISOString().split('T')[0];
+            const maxDateStr = maxDate.toISOString().split('T')[0];
+
+            dateInput.min = todayStr;
+            dateInput.max = maxDateStr;
+        });
+
         // Initialize EmailJS (Replace with your actual EmailJS credentials)
         emailjs.init("GGmNcHnj97dlZ9AaE"); // Replace with your EmailJS public key
 
@@ -307,6 +337,47 @@
         let generatedEmailOTP = '';
         let isEmailVerified = false;
         let emailOtpSent = false;
+
+        // Helper function to display messages safely
+        function displayMessage(message, type = 'info', isOtpMessage = false) {
+            const messagesDiv = isOtpMessage ? document.getElementById('otpMessages') : document.getElementById('formMessages');
+            if (!messagesDiv) {
+                console.error('Messages div not found!');
+                alert(message.replace(/<[^>]*>/g, '')); // Fallback to alert
+                return;
+            }
+            
+            const iconMap = {
+                'success': 'bi-check-circle',
+                'danger': 'bi-x-circle',
+                'warning': 'bi-exclamation-triangle',
+                'info': 'bi-info-circle'
+            };
+            
+            const icon = iconMap[type] || 'bi-info-circle';
+            messagesDiv.innerHTML = `<div class="alert alert-${type} mb-2"><i class="bi ${icon} me-2"></i>${message}</div>`;
+            
+            // Show the OTP messages div if it's an OTP message
+            if (isOtpMessage) {
+                messagesDiv.style.display = 'block';
+            }
+            
+            // Scroll to message
+            setTimeout(() => {
+                messagesDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+            
+            console.log(`Message displayed (${type}):`, message);
+        }
+
+        // Helper function to clear OTP messages
+        function clearOtpMessages() {
+            const otpMessagesDiv = document.getElementById('otpMessages');
+            if (otpMessagesDiv) {
+                otpMessagesDiv.innerHTML = '';
+                otpMessagesDiv.style.display = 'none';
+            }
+        }
 
         // Check if user came for appointment booking
         const urlParams = new URLSearchParams(window.location.search);
@@ -337,8 +408,8 @@
                 }
                 
                 if (messageTextarea && messageTextarea.value === '') {
-                    messageTextarea.placeholder = 'Please provide the following details:\n• Preferred date and time\n• Type of consultation needed\n• Your main health concerns\n• Any previous medical history\n• Any specific requirements';
-                    messageTextarea.value = '📅 APPOINTMENT REQUEST\n\n🗓️ Preferred Date: \n⏰ Preferred Time: \n🩺 Consultation Type: \n💬 Health Concerns: \n📋 Medical History: \n📝 Additional Notes: ';
+                    messageTextarea.placeholder = 'Please describe your health concerns, symptoms, or any additional information...';
+                    messageTextarea.value = '';
                 }
                 
                 // Add appointment-specific styling
@@ -411,7 +482,7 @@
             const messagesDiv = document.getElementById('formMessages');
 
             if (!email || !email.includes('@')) {
-                messagesDiv.innerHTML = '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>Please enter a valid email address.</div>';
+                displayMessage('Please enter a valid email address.', 'warning', true);
                 return;
             }
 
@@ -448,8 +519,11 @@
                     this.classList.remove('btn-success');
                     this.classList.add('btn-outline-success');
 
-                    // Show success message
-                    messagesDiv.innerHTML = `<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Email OTP sent to ${email}. Please check your inbox.</div>`;
+                    // Hide the help text when OTP is sent
+                    document.getElementById('otpHelpText').style.display = 'none';
+
+                    // Show success message in OTP area
+                    displayMessage(`Email OTP sent to ${email}. Please check your inbox.`, 'success', true);
 
                     // Enable resend after 30 seconds
                     setTimeout(() => {
@@ -458,7 +532,7 @@
                     }, 30000);
                 }, (error) => {
                     console.error('Email sending failed:', error);
-                    messagesDiv.innerHTML = '<div class="alert alert-danger"><i class="bi bi-exclamation-triangle me-2"></i>Failed to send email OTP. Please try again.</div>';
+                    displayMessage('Failed to send email OTP. Please try again.', 'danger', true);
 
                     // Reset button
                     this.innerHTML = '<i class="bi bi-envelope me-2"></i>Send Email OTP';
@@ -469,28 +543,45 @@
         // Verify Email OTP functionality
         document.getElementById('verifyEmailOtpBtn').addEventListener('click', function () {
             const enteredOTP = document.getElementById('emailOtp').value;
-            const messagesDiv = document.getElementById('formMessages');
+
+            console.log('Verify OTP clicked. Entered OTP:', enteredOTP, 'Generated OTP:', generatedEmailOTP);
+
+            // Clear previous OTP messages
+            clearOtpMessages();
 
             if (!emailOtpSent) {
-                messagesDiv.innerHTML = '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>Please send email OTP first.</div>';
+                console.log('Email OTP not sent yet');
+                displayMessage('Please send email OTP first.', 'warning', true);
                 return;
             }
 
-            if (enteredOTP.length !== 6) {
-                messagesDiv.innerHTML = '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>Please enter a valid 6-digit OTP.</div>';
+            if (!enteredOTP || enteredOTP.trim() === '') {
+                console.log('Empty OTP entered');
+                displayMessage('Please enter the OTP code.', 'danger', true);
+                return;
+            }
+
+            if (enteredOTP.length !== 6 || !/^\d{6}$/.test(enteredOTP)) {
+                console.log('Invalid OTP format');
+                displayMessage('Please enter a valid 6-digit numeric OTP.', 'danger', true);
                 return;
             }
 
             if (enteredOTP === generatedEmailOTP) {
+                console.log('OTP verified successfully');
                 isEmailVerified = true;
                 this.innerHTML = '<i class="bi bi-check-circle me-2"></i>Verified';
                 this.classList.remove('btn-outline-success');
                 this.classList.add('btn-success');
                 this.disabled = true;
                 document.getElementById('emailOtp').disabled = true;
-                messagesDiv.innerHTML = '<div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>Email address verified successfully!</div>';
+                displayMessage('Email address verified successfully!', 'success', true);
             } else {
-                messagesDiv.innerHTML = '<div class="alert alert-danger"><i class="bi bi-exclamation-triangle me-2"></i>Invalid email OTP. Please try again.</div>';
+                console.log('Invalid OTP entered');
+                displayMessage('Invalid OTP code. Please check your email and enter the correct 6-digit code.', 'danger', true);
+                // Clear the OTP input for retry
+                document.getElementById('emailOtp').value = '';
+                document.getElementById('emailOtp').focus();
             }
         });
 
@@ -532,8 +623,39 @@
                         // Reset verification status
                         isEmailVerified = false;
                         emailOtpSent = false;
+                        generatedEmailOTP = '';
                         document.getElementById('emailOtpSection').style.display = 'none';
                         document.getElementById('sendEmailOtpSection').style.display = 'none';
+                        clearOtpMessages();
+                        
+                        // Reset OTP button and help text
+                        const sendOtpBtn = document.getElementById('sendEmailOtpBtn');
+                        const verifyOtpBtn = document.getElementById('verifyEmailOtpBtn');
+                        const otpHelpText = document.getElementById('otpHelpText');
+                        const emailOtpInput = document.getElementById('emailOtp');
+                        
+                        if (sendOtpBtn) {
+                            sendOtpBtn.innerHTML = '<i class="bi bi-envelope me-2"></i>Send Email OTP';
+                            sendOtpBtn.classList.remove('btn-outline-success');
+                            sendOtpBtn.classList.add('btn-success');
+                            sendOtpBtn.disabled = false;
+                        }
+                        
+                        if (verifyOtpBtn) {
+                            verifyOtpBtn.innerHTML = 'Verify';
+                            verifyOtpBtn.classList.remove('btn-success');
+                            verifyOtpBtn.classList.add('btn-outline-success');
+                            verifyOtpBtn.disabled = false;
+                        }
+                        
+                        if (otpHelpText) {
+                            otpHelpText.style.display = 'inline';
+                        }
+                        
+                        if (emailOtpInput) {
+                            emailOtpInput.disabled = false;
+                            emailOtpInput.value = '';
+                        }
                         
                         // Reset appointment-specific styling and content
                         const formTitle = document.querySelector('.bg-light-green h2');
