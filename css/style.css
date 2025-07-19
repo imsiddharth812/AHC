@@ -25,9 +25,17 @@ html {
 }
 
 /* Prevent any container from being wider than viewport */
-.container, .container-fluid, .row {
+.container-fluid, .row {
     max-width: 100%;
     overflow-x: hidden;
+}
+
+/* Only apply full-width to containers on very small screens */
+@media (max-width: 575.98px) {
+    .container {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }
 
 /* Additional mobile overflow prevention */
@@ -44,9 +52,14 @@ pre, code {
     max-width: 100%;
 }
 
-/* Ensure all sections stay within viewport */
-section, div, main, article, aside {
+/* Ensure all sections stay within viewport - but exclude navigation containers */
+section:not(.navbar-section), main, article, aside {
     max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Only apply overflow hidden to specific divs that might cause horizontal scroll */
+div.container-fluid, div.row {
     overflow-x: hidden;
 }
 
@@ -617,6 +630,8 @@ section {
     object-fit: contain;
     margin-right: 0.75rem;
     margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+    vertical-align: top;
 }
 .footer-modern .h4, .footer-modern h4, .footer-modern h5, .footer-modern h6 {
     color: #fff !important;
