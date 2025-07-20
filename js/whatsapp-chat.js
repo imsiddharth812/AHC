@@ -66,7 +66,6 @@ function createWhatsAppButton() {
     // Update status
     updateClinicStatus();
 
-    console.log('WhatsApp chat button created');
 }
 
 // Add event listeners

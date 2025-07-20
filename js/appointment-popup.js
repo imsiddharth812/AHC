@@ -26,9 +26,7 @@ class AppointmentModal {
             <div id="appointmentModal" class="appointment-modal">
                 <div class="appointment-modal-content">
                     <div class="appointment-modal-header">
-                        <button class="appointment-close" id="appointmentClose">
-                            <i class="bi bi-x"></i>
-                        </button>
+                        <button class="appointment-close" id="appointmentClose">×</button>
                         <h2><i class="bi bi-calendar-heart me-2"></i>Schedule Your Consultation</h2>
                         <p>Fill out the form below and we'll contact you within 24 hours to confirm your appointment</p>
                     </div>
