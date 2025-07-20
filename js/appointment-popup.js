@@ -56,7 +56,7 @@ class AppointmentModal {
                                         <button type="button" class="btn btn-success" id="appointmentSendEmailOtpBtn">
                                             <i class="bi bi-envelope me-2"></i>Send Email OTP
                                         </button>
-                                        <small class="text-muted ms-3" id="appointmentOtpHelpText">We'll send a verification code to your email address</small>
+                                        <small class="text-muted" id="appointmentOtpHelpText">We'll send a verification code to your email address</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6" id="appointmentEmailOtpSection" style="display: none;">
