@@ -4,7 +4,7 @@ const WHATSAPP_CONFIG = {
     phoneNumber: '+919375727273', // Your WhatsApp number
     defaultMessage: 'Hello! I would like to book an appointment at Abhivyakt Homoeo Clinic.',
     businessHours: {
-        start: 17, // 5:00 PM
+        start: 11, // 11:00 AM
         end: 20,   // 8:00 PM
         days: [1, 2, 3, 4, 5, 6] // Monday to Saturday (0 = Sunday, 1 = Monday, etc.)
     }
@@ -171,7 +171,7 @@ function getNextAvailableTime() {
     // If today is a business day and before business hours
     if (WHATSAPP_CONFIG.businessHours.days.includes(currentDay) &&
         currentHour < WHATSAPP_CONFIG.businessHours.start) {
-        return 'today at 5:00 PM';
+        return 'today at 11:00 AM';
     }
 
     // Find next business day
@@ -179,11 +179,11 @@ function getNextAvailableTime() {
         const nextDay = (currentDay + i) % 7;
         if (WHATSAPP_CONFIG.businessHours.days.includes(nextDay)) {
             const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            return `${dayNames[nextDay]} at 5:00 PM`;
+            return `${dayNames[nextDay]} at 11:00 AM`;
         }
     }
 
-    return 'Monday at 5:00 PM';
+    return 'Monday at 11:00 AM';
 }
 
 // Add WhatsApp button styles
