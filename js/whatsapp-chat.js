@@ -4,7 +4,7 @@ const WHATSAPP_CONFIG = {
     phoneNumber: '+919375727273', // Your WhatsApp number
     defaultMessage: 'Hello! I would like to book an appointment at Abhivyakt Homoeo Clinic.',
     businessHours: {
-        start: 11, // 11:00 AM
+        start: 17, // 5:00 PM
         end: 20,   // 8:00 PM
         days: [1, 2, 3, 4, 5, 6] // Monday to Saturday (0 = Sunday, 1 = Monday, etc.)
     }
@@ -20,7 +20,7 @@ function createWhatsAppButton() {
     const whatsappButton = document.createElement('div');
     whatsappButton.id = 'whatsapp-chat-button';
     whatsappButton.className = 'whatsapp-float';
-    
+
     whatsappButton.innerHTML = `
         <div class="whatsapp-button" id="whatsappButton">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@ function createWhatsAppButton() {
                     <p>Hi there! 👋</p>
                     <p>How can we help you today?</p>
                     <div class="quick-actions">
-                        <button class="quick-btn" data-message="I would like to book an appointment">📅 Book Appointment</button>
+                        <button class="quick-btn" data-appointment-modal>📅 Book Appointment</button>
                         <button class="quick-btn" data-message="I have a question about homeopathy treatment">❓ Ask Question</button>
                         <button class="quick-btn" data-message="I need information about your services">ℹ️ Services Info</button>
                     </div>
@@ -59,13 +59,13 @@ function createWhatsAppButton() {
     `;
 
     document.body.appendChild(whatsappButton);
-    
+
     // Add event listeners
     addWhatsAppEventListeners();
-    
+
     // Update status
     updateClinicStatus();
-    
+
     console.log('WhatsApp chat button created');
 }
 
@@ -75,54 +75,43 @@ function addWhatsAppEventListeners() {
     const whatsappTooltip = document.getElementById('whatsappTooltip');
     const startChatBtn = document.getElementById('startChatBtn');
     const quickBtns = document.querySelectorAll('.quick-btn');
-    
+
     let selectedMessage = WHATSAPP_CONFIG.defaultMessage;
-    
+
     // Toggle tooltip on button click
-    whatsappButton.addEventListener('click', function(e) {
+    whatsappButton.addEventListener('click', function (e) {
         e.stopPropagation();
         whatsappTooltip.classList.toggle('show');
     });
-    
+
     // Close tooltip when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (!whatsappButton.contains(e.target) && !whatsappTooltip.contains(e.target)) {
             whatsappTooltip.classList.remove('show');
         }
     });
-    
+
     // Quick action buttons
     quickBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             selectedMessage = this.getAttribute('data-message');
-            
+
             // Update visual state
             quickBtns.forEach(b => b.classList.remove('selected'));
             this.classList.add('selected');
-            
-            // Update start chat button with full message or smart truncation
-            const maxLength = 35; // Increased from 20
-            const displayText = selectedMessage.length > maxLength 
-                ? selectedMessage.substring(0, maxLength) + '...' 
-                : selectedMessage;
-            startChatBtn.textContent = 'Send: "' + displayText + '"';
-            
-            // Add title attribute for full message on hover
-            if (selectedMessage.length > maxLength) {
-                startChatBtn.title = 'Send: "' + selectedMessage + '"';
-            } else {
-                startChatBtn.removeAttribute('title');
-            }
+
+            // Update start chat button
+            startChatBtn.textContent = 'Send: "' + selectedMessage.substring(0, 20) + '..."';
         });
     });
-    
+
     // Start chat button
-    startChatBtn.addEventListener('click', function() {
+    startChatBtn.addEventListener('click', function () {
         openWhatsAppChat(selectedMessage);
     });
-    
+
     // Direct click on main button (when tooltip is not shown)
-    whatsappButton.addEventListener('dblclick', function() {
+    whatsappButton.addEventListener('dblclick', function () {
         openWhatsAppChat(WHATSAPP_CONFIG.defaultMessage);
     });
 }
@@ -131,13 +120,13 @@ function addWhatsAppEventListeners() {
 function openWhatsAppChat(message = WHATSAPP_CONFIG.defaultMessage) {
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${WHATSAPP_CONFIG.phoneNumber.replace('+', '')}?text=${encodedMessage}`;
-    
+
     // Track the interaction (you can add analytics here)
     console.log('WhatsApp chat opened with message:', message);
-    
+
     // Open WhatsApp
     window.open(whatsappURL, '_blank');
-    
+
     // Close tooltip
     const tooltip = document.getElementById('whatsappTooltip');
     if (tooltip) {
@@ -150,21 +139,21 @@ function updateClinicStatus() {
     const now = new Date();
     const currentHour = now.getHours();
     const currentDay = now.getDay();
-    
+
     const statusElement = document.getElementById('clinicStatus');
     if (!statusElement) return;
-    
+
     const isBusinessDay = WHATSAPP_CONFIG.businessHours.days.includes(currentDay);
-    const isBusinessHour = currentHour >= WHATSAPP_CONFIG.businessHours.start && 
-                          currentHour < WHATSAPP_CONFIG.businessHours.end;
-    
+    const isBusinessHour = currentHour >= WHATSAPP_CONFIG.businessHours.start &&
+        currentHour < WHATSAPP_CONFIG.businessHours.end;
+
     if (isBusinessDay && isBusinessHour) {
         statusElement.textContent = 'Online';
         statusElement.className = 'status online';
     } else {
         statusElement.textContent = 'Offline';
         statusElement.className = 'status offline';
-        
+
         // Show next available time
         const nextAvailable = getNextAvailableTime();
         if (nextAvailable) {
@@ -178,29 +167,29 @@ function getNextAvailableTime() {
     const now = new Date();
     const currentDay = now.getDay();
     const currentHour = now.getHours();
-    
+
     // If today is a business day and before business hours
-    if (WHATSAPP_CONFIG.businessHours.days.includes(currentDay) && 
+    if (WHATSAPP_CONFIG.businessHours.days.includes(currentDay) &&
         currentHour < WHATSAPP_CONFIG.businessHours.start) {
-        return 'today at 11:00 AM';
+        return 'today at 5:00 PM';
     }
-    
+
     // Find next business day
     for (let i = 1; i <= 7; i++) {
         const nextDay = (currentDay + i) % 7;
         if (WHATSAPP_CONFIG.businessHours.days.includes(nextDay)) {
             const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            return `${dayNames[nextDay]} at 11:00 AM`;
+            return `${dayNames[nextDay]} at 5:00 PM`;
         }
     }
-    
-    return 'Monday at 11:00 AM';
+
+    return 'Monday at 5:00 PM';
 }
 
 // Add WhatsApp button styles
 function addWhatsAppStyles() {
     if (document.querySelector('#whatsapp-styles')) return;
-    
+
     const style = document.createElement('style');
     style.id = 'whatsapp-styles';
     style.textContent = `
@@ -247,7 +236,7 @@ function addWhatsAppStyles() {
             position: absolute;
             bottom: 70px;
             right: 0;
-            width: 360px;
+            width: 320px;
             background: white;
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -327,16 +316,12 @@ function addWhatsAppStyles() {
             background: #f8f9fa;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            padding: 10px 12px;
+            padding: 8px 12px;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 13px;
             color: #4a5568;
-            line-height: 1.3;
-            word-wrap: break-word;
-            white-space: normal;
-            min-height: 36px;
         }
         
         .quick-btn:hover {
@@ -369,11 +354,6 @@ function addWhatsAppStyles() {
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 13px;
-            line-height: 1.3;
-            word-wrap: break-word;
-            white-space: normal;
-            min-height: 44px;
         }
         
         .start-chat-btn:hover {
@@ -397,7 +377,7 @@ function addWhatsAppStyles() {
             }
             
             .whatsapp-tooltip {
-                width: 320px;
+                width: 280px;
                 right: -10px;
             }
         }
@@ -406,16 +386,6 @@ function addWhatsAppStyles() {
             .whatsapp-tooltip {
                 width: calc(100vw - 40px);
                 right: -20px;
-            }
-            
-            .start-chat-btn {
-                font-size: 12px;
-                padding: 10px 8px;
-            }
-            
-            .quick-btn {
-                font-size: 12px;
-                padding: 8px 10px;
             }
         }
         
@@ -434,7 +404,7 @@ function addWhatsAppStyles() {
             animation: none;
         }
     `;
-    
+
     document.head.appendChild(style);
 }
 
@@ -442,13 +412,13 @@ function addWhatsAppStyles() {
 function initializeWhatsAppChat() {
     addWhatsAppStyles();
     createWhatsAppButton();
-    
+
     // Update status every minute
     setInterval(updateClinicStatus, 60000);
 }
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     setTimeout(initializeWhatsAppChat, 1000);
 });
 
