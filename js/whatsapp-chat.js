@@ -1,10 +1,10 @@
 // WhatsApp Chat Button
 // Configuration
 const WHATSAPP_CONFIG = {
-    phoneNumber: '+919429327672', // Your WhatsApp number
+    phoneNumber: '+919375727273', // Your WhatsApp number
     defaultMessage: 'Hello! I would like to book an appointment at Abhivyakt Homoeo Clinic.',
     businessHours: {
-        start: 17, // 5:00 PM
+        start: 11, // 11:00 AM
         end: 20,   // 8:00 PM
         days: [1, 2, 3, 4, 5, 6] // Monday to Saturday (0 = Sunday, 1 = Monday, etc.)
     }
@@ -100,8 +100,19 @@ function addWhatsAppEventListeners() {
             quickBtns.forEach(b => b.classList.remove('selected'));
             this.classList.add('selected');
             
-            // Update start chat button
-            startChatBtn.textContent = 'Send: "' + selectedMessage.substring(0, 20) + '..."';
+            // Update start chat button with full message or smart truncation
+            const maxLength = 35; // Increased from 20
+            const displayText = selectedMessage.length > maxLength 
+                ? selectedMessage.substring(0, maxLength) + '...' 
+                : selectedMessage;
+            startChatBtn.textContent = 'Send: "' + displayText + '"';
+            
+            // Add title attribute for full message on hover
+            if (selectedMessage.length > maxLength) {
+                startChatBtn.title = 'Send: "' + selectedMessage + '"';
+            } else {
+                startChatBtn.removeAttribute('title');
+            }
         });
     });
     
@@ -171,7 +182,7 @@ function getNextAvailableTime() {
     // If today is a business day and before business hours
     if (WHATSAPP_CONFIG.businessHours.days.includes(currentDay) && 
         currentHour < WHATSAPP_CONFIG.businessHours.start) {
-        return 'today at 5:00 PM';
+        return 'today at 11:00 AM';
     }
     
     // Find next business day
@@ -179,11 +190,11 @@ function getNextAvailableTime() {
         const nextDay = (currentDay + i) % 7;
         if (WHATSAPP_CONFIG.businessHours.days.includes(nextDay)) {
             const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            return `${dayNames[nextDay]} at 5:00 PM`;
+            return `${dayNames[nextDay]} at 11:00 AM`;
         }
     }
     
-    return 'Monday at 5:00 PM';
+    return 'Monday at 11:00 AM';
 }
 
 // Add WhatsApp button styles
@@ -236,7 +247,7 @@ function addWhatsAppStyles() {
             position: absolute;
             bottom: 70px;
             right: 0;
-            width: 320px;
+            width: 360px;
             background: white;
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -316,12 +327,16 @@ function addWhatsAppStyles() {
             background: #f8f9fa;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 10px 12px;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 13px;
             color: #4a5568;
+            line-height: 1.3;
+            word-wrap: break-word;
+            white-space: normal;
+            min-height: 36px;
         }
         
         .quick-btn:hover {
@@ -354,6 +369,11 @@ function addWhatsAppStyles() {
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-size: 13px;
+            line-height: 1.3;
+            word-wrap: break-word;
+            white-space: normal;
+            min-height: 44px;
         }
         
         .start-chat-btn:hover {
@@ -377,7 +397,7 @@ function addWhatsAppStyles() {
             }
             
             .whatsapp-tooltip {
-                width: 280px;
+                width: 320px;
                 right: -10px;
             }
         }
@@ -386,6 +406,16 @@ function addWhatsAppStyles() {
             .whatsapp-tooltip {
                 width: calc(100vw - 40px);
                 right: -20px;
+            }
+            
+            .start-chat-btn {
+                font-size: 12px;
+                padding: 10px 8px;
+            }
+            
+            .quick-btn {
+                font-size: 12px;
+                padding: 8px 10px;
             }
         }
         

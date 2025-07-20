@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Chat Widget Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            color: #25D366;
+            margin-top: 0;
+        }
+        .improvement {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #25D366;
+            margin: 10px 0;
+        }
+        .improvement h4 {
+            margin: 0 0 8px 0;
+            color: #333;
+        }
+        .improvement p {
+            margin: 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WhatsApp Chat Widget Improvements</h1>
+        
+        <div class="test-section">
+            <h3>✅ Text Visibility Improvements</h3>
+            
+            <div class="improvement">
+                <h4>1. Increased Character Limit</h4>
+                <p>Changed from 20 to 35 characters before truncation, allowing more text to be visible.</p>
+            </div>
+            
+            <div class="improvement">
+                <h4>2. Wider Tooltip</h4>
+                <p>Increased tooltip width from 320px to 360px to accommodate longer messages.</p>
+            </div>
+            
+            <div class="improvement">
+                <h4>3. Better Text Wrapping</h4>
+                <p>Added proper word wrapping and line height for better readability.</p>
+            </div>
+            
+            <div class="improvement">
+                <h4>4. Hover Tooltip</h4>
+                <p>Added title attribute to show full message on hover when text is truncated.</p>
+            </div>
+            
+            <div class="improvement">
+                <h4>5. Mobile Responsiveness</h4>
+                <p>Improved mobile layout with better font sizes and padding for smaller screens.</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🧪 Test Instructions</h3>
+            <ol>
+                <li>Click the WhatsApp chat button in the bottom right corner</li>
+                <li>Select different quick action buttons to see the message preview</li>
+                <li>Notice how much more text is now visible</li>
+                <li>Hover over truncated text to see the full message</li>
+                <li>Test on mobile devices to see responsive improvements</li>
+            </ol>
+        </div>
+        
+        <div class="test-section">
+            <h3>📱 Mobile Testing</h3>
+            <p>Resize your browser window or use browser dev tools to test mobile responsiveness. The widget should now display text more clearly on smaller screens.</p>
+        </div>
+    </div>
+
+    <!-- Include the WhatsApp chat widget -->
+    <script src="js/whatsapp-chat.js"></script>
+</body>
+</html> 
