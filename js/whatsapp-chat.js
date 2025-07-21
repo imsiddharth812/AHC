@@ -1,8 +1,8 @@
 // WhatsApp Chat Button
 // Configuration
 const WHATSAPP_CONFIG = {
-    phoneNumber: '+919375727273', // Your WhatsApp number
-    defaultMessage: 'Hello! I would like to book an appointment at Abhivyakt Homoeo Clinic.',
+    phoneNumber: '+919429327672', // Your WhatsApp number
+    defaultMessage: 'Hello! I am interested in homeopathy treatment.',
     businessHours: {
         start: 11, // 11:00 AM
         end: 20,   // 8:00 PM

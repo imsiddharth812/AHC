@@ -194,15 +194,20 @@ class AppointmentModal {
 
     openModal() {
         this.modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-        
+        // Prevent background scroll
+        this.scrollY = window.scrollY;
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${this.scrollY}px`;
         // Reset form
         this.resetForm();
     }
 
     closeModal() {
         this.modal.classList.remove('show');
-        document.body.style.overflow = '';
+        // Restore background scroll
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, this.scrollY || 0);
     }
 
     resetForm() {
