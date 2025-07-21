@@ -31,7 +31,7 @@ function createWhatsAppButton() {
         <div class="whatsapp-tooltip" id="whatsappTooltip">
             <div class="tooltip-content">
                 <div class="tooltip-header">
-                    <img src="images/logo.png" alt="Abhivyakt Homoeo Clinic" class="tooltip-logo">
+                    <img src="/images/logo.png" alt="Abhivyakt Homoeo Clinic" class="tooltip-logo">
                     <div>
                         <h4>Abhivyakt Homoeo Clinic</h4>
                         <p class="status" id="clinicStatus">Online</p>

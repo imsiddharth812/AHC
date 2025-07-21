@@ -37,6 +37,43 @@
     }
 })();
 
+// Highlight active nav link based on current URL
+function setActiveNavLink() {
+  const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+  let currentPath = window.location.pathname;
+  console.log('Current path:', currentPath);
+  
+  // Define service page paths
+  const servicePaths = ['/acuteIllness/', '/chronicdiseasecare/', '/paediatrichomoeopathy/', '/womenwellness/'];
+  const isServicePage = servicePaths.some(path => currentPath.startsWith(path.replace(/\/$/, '')));
+  
+  navLinks.forEach(link => {
+    let linkPath = link.getAttribute('href');
+    console.log('Checking link:', linkPath);
+    
+    link.classList.remove('active');
+    
+    // Home page matching
+    if (linkPath === '/' && (currentPath === '/' || currentPath === '' || currentPath === '/index.html')) {
+      link.classList.add('active');
+      console.log('Matched home page');
+    }
+    // Services dropdown matching - highlight if on any service page
+    else if (linkPath === '/acuteIllness/' && isServicePage) {
+      link.classList.add('active');
+      console.log('Matched services page:', currentPath);
+    }
+    // Other pages matching - check if current path starts with the link path
+    else if (linkPath !== '/' && linkPath !== '/acuteIllness/' && currentPath.startsWith(linkPath.replace(/\/$/, ''))) {
+      link.classList.add('active');
+      console.log('Matched page:', linkPath);
+    }
+  });
+}
+
+// Function to be called after header is loaded
+window.setActiveNavLink = setActiveNavLink;
+
 document.addEventListener('DOMContentLoaded', function () {
   const mq = window.matchMedia('(min-width: 992px)');
   const dropdown = document.querySelector('.navbar .dropdown');
@@ -44,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!dropdown || !dropdownMenu) return;
 
   let hoverTimeout;
+  let isOverDropdown = false;
+  let isOverMenu = false;
 
   function showDropdown() {
     if (mq.matches) {
@@ -52,19 +91,33 @@ document.addEventListener('DOMContentLoaded', function () {
       dropdownMenu.classList.add('show');
     }
   }
-  function hideDropdown() {
+  function hideDropdownWithDelay() {
     if (mq.matches) {
       hoverTimeout = setTimeout(() => {
-        dropdown.classList.remove('show');
-        dropdownMenu.classList.remove('show');
-      }, 120); // Small delay for user to move mouse
+        if (!isOverDropdown && !isOverMenu) {
+          dropdown.classList.remove('show');
+          dropdownMenu.classList.remove('show');
+        }
+      }, 250); // Slightly longer delay for better UX
     }
   }
 
-  dropdown.addEventListener('mouseenter', showDropdown);
-  dropdown.addEventListener('mouseleave', hideDropdown);
-  dropdownMenu.addEventListener('mouseenter', showDropdown);
-  dropdownMenu.addEventListener('mouseleave', hideDropdown);
+  dropdown.addEventListener('mouseenter', function() {
+    isOverDropdown = true;
+    showDropdown();
+  });
+  dropdown.addEventListener('mouseleave', function() {
+    isOverDropdown = false;
+    hideDropdownWithDelay();
+  });
+  dropdownMenu.addEventListener('mouseenter', function() {
+    isOverMenu = true;
+    showDropdown();
+  });
+  dropdownMenu.addEventListener('mouseleave', function() {
+    isOverMenu = false;
+    hideDropdownWithDelay();
+  });
 
   // Remove show class on resize to mobile
   window.addEventListener('resize', () => {

@@ -15,54 +15,24 @@
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white floating-navbar">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="index.html">
-                    <img src="images/logo.png" alt="Abhivyakt Homoeopathy Logo" class="logo-img me-2" height="44">
-                    <h1 class="h4 mb-0 text-success">Abhivyakt Homoeo Clinic</h1>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#services" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Services
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                                <li><a class="dropdown-item" href="acuteIllness.html">Acute Illness Management</a></li>
-                                <li><a class="dropdown-item" href="#">Chronic Disease Care</a></li>
-                                <li><a class="dropdown-item" href="#">Pediatric Homoeopathy</a></li>
-                                <li><a class="dropdown-item" href="#">Women's Wellness</a></li>
-                            </ul>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="index.html#testimonials">Testimonials</a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-success ms-lg-3" href="#" data-appointment-modal>Book Appointment</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
+    <script>
+      fetch('/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+          // Call setActiveNavLink after header is loaded with a small delay
+          setTimeout(() => {
+            if (window.setActiveNavLink) {
+              window.setActiveNavLink();
+            }
+          }, 100);
+        });
+    </script>
 
     <!-- About Hero Section -->
     <section class="about-header-section py-5 bg-light">
@@ -73,7 +43,7 @@
                     <hr class="about-divider mx-auto mb-3" />
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center mb-0">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">About Us</li>
                         </ol>
                     </nav>
@@ -142,7 +112,7 @@
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <div class="position-relative">
-                        <img src="images/about-story-1.png" alt="Our Clinic" class="img-fluid rounded-4 shadow">
+                        <img src="/images/about-story-1.png" alt="Our Clinic" class="img-fluid rounded-4 shadow">
                     </div>
                 </div>
             </div>
@@ -227,9 +197,14 @@
     </section>
 
     <div id="footer-placeholder"></div>
-    <script src="navbar.js"></script>
+    <script src="/navbar.js"></script>
     <script>
-      fetch('footer.html')
+      fetch('/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+        });
+      fetch('/footer.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('footer-placeholder').innerHTML = data;
@@ -290,9 +265,8 @@
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <!-- Appointment Popup -->
-    <script src="js/appointment-popup.js"></script>
-    <!-- WhatsApp Chat Button -->
-    <script src="js/whatsapp-chat.js"></script>
-    <script src="js/scroll-to-top.js"></script>
+    <script src="/js/appointment-popup.js"></script>
+    <script src="/js/whatsapp-chat.js"></script>
+    <script src="/js/scroll-to-top.js"></script>
 </body>
 </html> 

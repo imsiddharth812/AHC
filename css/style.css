@@ -1461,3 +1461,27 @@ body.homepage .floating-navbar {
   width: 100vw;
   /* top will be set dynamically via JS */
 }
+
+/* Fix dropdown gap for navbar so mouse can move smoothly from parent to submenu */
+.navbar .dropdown-menu {
+  margin-top: 0 !important;
+  /* Remove any gap */
+}
+
+/* Optional: Add a buffer area below the parent link to prevent accidental mouseleave */
+.navbar .dropdown:hover::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 16px;
+  top: 100%;
+  /* Place just below the parent */
+  z-index: 1;
+}
+
+/* Ensure parent is positioned for the pseudo-element */
+.navbar .dropdown {
+  position: relative;
+}

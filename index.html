@@ -11,55 +11,25 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white floating-navbar">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src="images/logo.png" alt="Abhivyakt Homoeopathy Logo" class="logo-img me-2" height="44">
-                    <h1 class="h4 mb-0 text-success">Abhivyakt Homoeo Clinic</h1>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#services" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Services
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-                                <li><a class="dropdown-item" href="acuteIllness.html">Acute Illness Management</a></li>
-                                <li><a class="dropdown-item" href="chronicdiseasecare.html">Chronic Disease Care</a></li>
-                                <li><a class="dropdown-item" href="paediatrichomoeopathy.html">Pediatric Homoeopathy</a></li>
-                                <li><a class="dropdown-item" href="womenwellness.html">Women's Wellness</a></li>
-                            </ul>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#testimonials">Testimonials</a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-success ms-lg-3" href="#" data-appointment-modal>Book Appointment</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
+    <script>
+      fetch('/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+          // Call setActiveNavLink after header is loaded with a small delay
+          setTimeout(() => {
+            if (window.setActiveNavLink) {
+              window.setActiveNavLink();
+            }
+          }, 100);
+        });
+    </script>
 
     <!-- Hero Section -->
     <section id="home" class="hero-section position-relative overflow-hidden">
@@ -118,8 +88,8 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
                     <div class="d-flex gap-4 align-items-start about-img-group">
-                        <img src="images/about1.jpg" alt="Smiling patient" class="about-img rounded-4 shadow-sm flex-fill">
-                        <img src="images/about2.jpg" alt="doctor with patient" class="about-img rounded-4 shadow-sm flex-fill about-img-offset">
+                        <img src="/images/about1.jpg" alt="Smiling patient" class="about-img rounded-4 shadow-sm flex-fill">
+                        <img src="/images/about2.jpg" alt="doctor with patient" class="about-img rounded-4 shadow-sm flex-fill about-img-offset">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -163,7 +133,7 @@
                         <div class="service-readmore mt-4 mx-auto">
                             <button class="readmore-btn">
                                 <i class="bi bi-plus-lg"></i>
-                                <span class="readmore-text"><a href="acuteIllness.html">Read more</a></span>
+                                <span class="readmore-text"><a href="/acuteIllness/">Read more</a></span>
                             </button>
                         </div>
                     </div>
@@ -178,7 +148,7 @@
                         <div class="service-readmore mt-4 mx-auto">
                             <button class="readmore-btn">
                                 <i class="bi bi-plus-lg"></i>
-                                <span class="readmore-text"><a href="chronicdiseasecare.html">Read more</a></span>
+                                <span class="readmore-text"><a href="/chronicdiseasecare/">Read more</a></span>
                             </button>
                         </div>
                     </div>
@@ -193,7 +163,7 @@
                         <div class="service-readmore mt-4 mx-auto">
                             <button class="readmore-btn">
                                 <i class="bi bi-plus-lg"></i>
-                                <span class="readmore-text"><a href="paediatrichomoeopathy.html">Read more</a></span>
+                                <span class="readmore-text"><a href="/paediatrichomoeopathy/">Read more</a></span>
                             </button>
                         </div>
                     </div>
@@ -208,7 +178,7 @@
                         <div class="service-readmore mt-4 mx-auto">
                             <button class="readmore-btn">
                                 <i class="bi bi-plus-lg"></i>
-                                <span class="readmore-text"><a href="womenwellness.html">Read more</a></span>
+                                <span class="readmore-text"><a href="/womenwellness/">Read more</a></span>
                             </button>
                         </div>
                     </div>
@@ -221,22 +191,22 @@
     </section>
 
     <div id="footer-placeholder"></div>
-    <script src="navbar.js"></script>
+    <script src="/navbar.js"></script>
     <script>
-      fetch('footer.html')
+      fetch('/footer.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('footer-placeholder').innerHTML = data;
         });
     </script>
-    <script src="hero-leaves.js"></script>
+    <script src="/hero-leaves.js"></script>
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <!-- Appointment Popup -->
-    <script src="js/appointment-popup.js"></script>
+    <script src="/js/appointment-popup.js"></script>
     <!-- WhatsApp Chat Button -->
-    <script src="js/whatsapp-chat.js"></script>
-    <script src="js/scroll-to-top.js"></script>
+    <script src="/js/whatsapp-chat.js"></script>
+    <script src="/js/scroll-to-top.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
