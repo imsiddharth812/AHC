@@ -1,10 +1,10 @@
 // WhatsApp Chat Button
-// Configuration
+// WhatsApp Configuration - Uses global CONFIG if available
 const WHATSAPP_CONFIG = {
-    phoneNumber: '+919429327672', // Your WhatsApp number
+    phoneNumber: window.CONFIG ? CONFIG.contact.phone : '+919429327672',
     defaultMessage: 'Hello! I am interested in homeopathy treatment.',
-    businessHours: {
-        start: 11, // 11:00 AM
+    businessHours: window.CONFIG ? CONFIG.businessHours : {
+        start: 17, // 5:00 PM  
         end: 20,   // 8:00 PM
         days: [1, 2, 3, 4, 5, 6] // Monday to Saturday (0 = Sunday, 1 = Monday, etc.)
     }

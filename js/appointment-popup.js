@@ -16,8 +16,8 @@ class AppointmentModal {
 
     initEmailJS() {
         // Initialize EmailJS
-        if (typeof emailjs !== 'undefined') {
-            emailjs.init("GGmNcHnj97dlZ9AaE");
+        if (typeof emailjs !== 'undefined' && window.CONFIG) {
+            emailjs.init(CONFIG.emailjs.publicKey);
         }
     }
 
@@ -271,8 +271,8 @@ class AppointmentModal {
         };
 
         // Send email using EmailJS
-        if (typeof emailjs !== 'undefined') {
-            emailjs.send('service_ttj0b38', 'template_5aydwlh', templateParams)
+        if (typeof emailjs !== 'undefined' && window.CONFIG) {
+            emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, templateParams)
                 .then((response) => {
                     // Show OTP section
                     document.getElementById('appointmentEmailOtpSection').style.display = 'block';
@@ -364,7 +364,7 @@ class AppointmentModal {
         };
 
         // Submit to Formspree
-        fetch('https://formspree.io/f/mwpqpqqb', {
+        fetch(CONFIG.forms.appointment, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
