@@ -15,9 +15,8 @@ class AppointmentModal {
     }
 
     initEmailJS() {
-        // Initialize EmailJS
         if (typeof emailjs !== 'undefined' && window.CONFIG) {
-            emailjs.init(CONFIG.emailjs.publicKey);
+            emailjs.init({ publicKey: CONFIG.emailjs.publicKey });
         }
     }
 
@@ -287,7 +286,7 @@ class AppointmentModal {
                     document.getElementById('appointmentOtpHelpText').style.display = 'none';
 
                     // Show success message
-                    this.displayMessage(`Email OTP sent to ${email}. Please check your inbox.`, 'success', true);
+                    this.displayMessage(`Email OTP sent to ${email}. Please check your inbox (and spam folder).`, 'success', true);
 
                     // Enable resend after 30 seconds
                     setTimeout(() => {
@@ -295,7 +294,11 @@ class AppointmentModal {
                         sendBtn.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Resend Email OTP';
                     }, 30000);
                 }, (error) => {
-                    this.displayMessage('Failed to send email OTP. Please try again.', 'danger', true);
+                    console.error('EmailJS error:', error);
+                    this.displayMessage(
+                        'Failed to send email OTP. Please try again or contact us directly at <a href="tel:+919429327672">+91 94293 27672</a>.',
+                        'danger', true
+                    );
                     sendBtn.innerHTML = '<i class="bi bi-envelope me-2"></i>Send Email OTP';
                     sendBtn.disabled = false;
                 });
